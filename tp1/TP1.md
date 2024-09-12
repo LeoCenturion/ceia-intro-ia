@@ -11,7 +11,10 @@ Estática vs dinámica: estática. Solo el agente cambia el entorno.
 Discreta vs continua. Discreta.
 Agente individual vs Multiagente: agente individual.
 3. En el contexto de este problema, establezca cuáles son los: estado, espacio de estados, árbol de búsqueda, nodo de búsqueda, objetivo, acción y frontera.
-Espacio de estados: representando un estado como una 3-upla de listas de enteros del 1 al 5 (l1, l2, l3) donde cada li representa el estado de la varilla i siendo el primer elemento de li el disco del fondo de la varilla y el siguiente el disco que se encuentra por encima. Dado lo anterior el espacio de estados se conforma por todos los (l1, l2, l3) con li ordenado de forma descendiente, sin elementos repetidos, y con elementos del rango [1,5].
+
+Estado: representando un estado como una 3-upla de listas de enteros del 1 al 5 (l1, l2, l3) donde cada li representa el estado de la varilla i siendo el primer elemento de li el disco del fondo de la varilla y el siguiente el disco que se encuentra por encima. Dado lo anterior el espacio de estados se conforma por todos los (l1, l2, l3) con li ordenado de forma descendiente, sin elementos repetidos, y con elementos del rango [1,5].
+
+Espacio de estados: todas las 3-uplas que cumplan con lo de arriba.
 
 Estado inicial: ([5,4,3,2,1], [], []).
 Objetivo: ([],[],[5,4,3,2,1]).

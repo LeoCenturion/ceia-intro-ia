@@ -20,5 +20,9 @@ Arbol de busqueda: ??
 nodo de busqueda: ??
 frontera: ??
 
+4. Implemente algún método de búsqueda. Puedes elegir cualquiera menos búsqueda en anchura primero (el desarrollado en clase). Sos libre de elegir cualquiera de los vistos en clases, o inclusive buscar nuevos.
+dfs
+
+
 
 

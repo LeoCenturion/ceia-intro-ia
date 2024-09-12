@@ -6,14 +6,13 @@ authors = ["leo centurion <centurionm.leo@gmail.com>"]
 readme = "README.md"
 [virtualenvs]
 in-project = true
-[tool.poetry.scripts]
-nb = "jupyter notebook"
 
 [tool.poetry.dependencies]
 python = "^3.11"
 jupyter = "^1.1.0"
 numpy = "^2.1.0"
-
+pandas = "2.2.2"
+matplotlib = "3.9.2"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

@@ -8,7 +8,7 @@ from search import (  # Importa las funciones de búsqueda del módulo search
     dfs_tree_search
 )
 
-def main():
+def main(debug = False):
     """
     Función principal que resuelve el problema de la Torre de Hanoi y genera los JSON para el simulador.
     """
@@ -34,7 +34,7 @@ def main():
     # Resuelve el problema utilizando búsqueda en anchura, pero con memoria que recuerda caminos ya recorridos.
     #last_node = breadth_first_graph_search(problem_hanoi, display=True)
 
-    last_node = dfs_tree_search(problem_hanoi, display=True)
+    last_node = dfs_tree_search(problem_hanoi, display=debug)
 
     _, memory_peak = tracemalloc.get_traced_memory()
     memory_peak /= 1024*1024
@@ -45,7 +45,7 @@ def main():
 
     if isinstance(last_node, NodeHanoi):
         # Imprime la longitud del camino de la solución encontrada
-        print(f'Longitud del camino de la solución: {last_node.state.accumulated_cost}')
+        if debug: print(f'Longitud del camino de la solución: {last_node.state.accumulated_cost}')
 
         # Genera los JSON para el simulador
         last_node.generate_solution_for_simulator()
@@ -55,10 +55,19 @@ def main():
         print("No se encuentra solución")
 
     # Imprime las métricas medidas
-    print(f"Tiempo que demoró: {elapsed_time} [s]", )
-    print(f"Maxima memoria ocupada: {round(memory_peak, 2)} [MB]", )
+    if debug: print(f"Tiempo que demoró: {elapsed_time} [s]", )
+    if debug: print(f"Maxima memoria ocupada: {round(memory_peak, 2)} [MB]", )
+    return (elapsed_time, round(memory_peak, 2), last_node.state.accumulated_cost)
 
 
 # Sección de ejecución del programa
 if __name__ == "__main__":
-    main()
+    values = [ main(False) for i in range(10) ]
+    cpu_time = [value[0] for value in values] 
+    mem = [value[1] for value in values] 
+    path_lengths = [value[2] for value in values] 
+    print(values)
+    print(f"Avg cpu time: {sum(cpu_time)/len(cpu_time)} s")
+    print(f"Avg mem used: {sum(mem)/len(mem)} Mb")
+    print(f"Avg path length: {sum(path_lengths)/len(path_lengths)} nodes")
+    print(f"Theoretical optimal path length: {2**5 - 1} nodes")

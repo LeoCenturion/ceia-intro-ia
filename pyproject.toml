@@ -4,6 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["leo centurion <centurionm.leo@gmail.com>"]
 readme = "README.md"
+
 [virtualenvs]
 in-project = true
 

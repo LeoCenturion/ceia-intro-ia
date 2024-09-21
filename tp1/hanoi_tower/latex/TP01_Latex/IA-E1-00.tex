@@ -1,0 +1,179 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{latexsym,amsfonts,amssymb,amsthm,amsmath}
+\usepackage[spanish]{babel}
+\usepackage{datetime}
+\usepackage{siunitx}
+%% \usepackage{enumitem} % Importar el paquete enumitem para modificar las etiquetas de las listas
+\usepackage{graphicx}
+
+\sisetup{
+    output-decimal-marker = {.},
+}
+
+\setlength{\parindent}{0in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{8.8in}
+\setlength{\topmargin}{0in}
+\setlength{\headheight}{18pt}
+
+\begin{document}
+
+    \begingroup  
+        \centering
+        \LARGE Introducción a la Inteligencia Artificial\\
+        \LARGE Entregable Nº 1: Problema de la Torre de Hanoi\\[0.5em]
+        \large \today\\[0.5em]
+        \begin{table}[h]
+            \centering
+            \begin{tabular}{|c|c|c|}
+                \hline
+                Autores & E-mail & Nº SIU \\
+                \hline
+                Leonardo Centurión & centurionm.leo@gmail.com & a1803 \\
+                Braian Desía & b.desia@hotmail.com & a1804 \\
+                Juan José Cardinali & juanchijc@gmail.com & a1089 \\ 
+                Rodrigo Meza & rodrigolx31@gmail.com & a1815 \\
+                Juan Ramos Nervi & jern10@gmail.com & a1821 \\
+                \hline
+            \end{tabular}
+        \end{table}
+
+    \endgroup
+
+    \vspace{0.0in}
+
+    \subsection*{Enunciado 1}
+        
+        ¿Cuáles son los PEAS de este problema? (Performance, Environment, Actuators, Sensors)
+        \subsection*{Resolución}
+            \vspace{0.1in}
+
+            \begin{itemize}
+                \item \textbf{Performance}:
+                    \begin{itemize}
+                        \item Si alcanza o no una solución. En este caso, si logra mover todos los discos de forma tal que se alcance una configuración en la que esten ordenados todos en forma descendente en una misma varilla distinta a la inicial.
+                        \item Cantidad de movimientos hasta alcanzar una solución.
+                    \end{itemize}
+                \item \textbf{Environment}: Las $m$ varillas y $n$ discos. En este caso, 3 varillas y 5 discos.
+                \item \textbf{Actuators}: Lo que sea que mueva un disco de una posición a otra.
+                \item \textbf{Sensors}: Lo que sea que detecte la cantidad de discos y varillas (parámetros de entrada) y la configuración inicial de los discos (estado inicial).
+            \end{itemize}
+            
+    \newpage
+
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+%
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    \subsection*{Enunciado 2}
+        
+        ¿Cuáles son las propiedades del entorno de trabajo?
+        \subsection*{Resolución}
+            \vspace{0.1in}
+
+            \begin{itemize}
+                \item \textbf{Totalmente observable}: El agente tiene noción plena del entorno de trabajo, sabe perfectamente la cantidad de varillas y discos, y la distribución de estos últimos.
+                \item \textbf{Determinista}: El siguiente estado del entorno de trabajo esta plenamente determinado con la configuración actual y la acción que lleva a cabo el agente.
+                \item \textbf{Secuencial}: Cada movimiento de un disco, condiciona los siguientes movimientos, es decir, las posibles configuraciones admisibles.
+                \item \textbf{Estático}: El entorno de trabajo no cambia por si mismo o por otros agentes, mientras el agente razona. El entorno cambia pura y exclusicamente por acción del agente.
+                \item \textbf{Discreto}: Las variables que definen el entorno del trabajo (cantidad de varillas y discos, cantidad de discos en cada varilla, orden de los discos) están representadas por valores discretos. En este caso, estas variables pertenecen al conjunto de los enteros $\mathbb{N}$.
+                \item \textbf{Agente individual}.
+            \end{itemize}
+    \newpage
+
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+%
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+\subsection*{Enunciado 3}
+        
+En el contexto de este problema, establezca cuáles son los: estado, espacio de estados, árbol de búsqueda, 
+nodo de búsqueda, objetivo, acción y frontera.
+\subsection*{Resolución}
+\vspace{0.1in}
+
+    \begin{itemize}
+        \item \textbf{Estado}: Para el caso de 3 varillas y 5 discos, se representa mediante una 3-upla de listas de enteros del 1 a 5 $[l_{1},l_{2},l_{3}]$ donde cada $l_{1}$ es el estado de la varilla $i$, siendo el primer elemento de $l_{i}[1]$ el disco del fondo de la varilla y el siguiente el disco que se encuentra por encima, y así sucesivamente.
+        \item \textbf{Espacio de estados}: Dada la definición de estado de más arriba, el espacio de estados se conforma por todas las combinaciones posibles de los elementos del conjunto [1,5] distribuidos en la 3-upla $[l_{1},l_{2},l_{3}]$, con cada $l_{1}$ ordenado de forma descendiente.
+        \item \textbf{Árbol de búsqueda}: Todas las posibles secuencias de movimientos que el agente puede realizar para pasar de un estado inicial al estado objetivo final (todos los discos en otra varilla distinta a la inicial, en orden descendente de tamaño).
+        \item \textbf{Nodo de búsqueda}: Comprende: 
+            \begin{itemize}
+                \item State: El estado, del espacio de estados, que corresponde el nodo representado en este problema como la 3-upla.
+                \item Node Parent: El nodo en el árbol de búsqueda que ha generado al nodo, es decirm el estado del espacio de estados del cual deriva la configuración actual.
+                \item Action: La acción que se aplicará al padre (estado anterior) para generar el nodo (estado actual).
+                \item Path-Cost: El costo desde el estado inicial al estado actual.
+            \end{itemize}
+        \item \textbf{Objetivo}: Alcanzar una configuración donde todos los discos se encuentren en una única varilla, distinta a la inicial, ordenados en forma descendente.
+        \item \textbf{Acción}: Tomar el último disco de una de las varillas, partiendo de arriba hacia abajo, y colocarlo en otra siempre y cuando se cumpla que el disco a colocar sea de menor tamaño que el último disco en la varilla nueva. En el código, tomar el último elemento de una de las listas de la 3-upla y colocarlo al final de una de las listas restantes verificando que la lista recibidora del disco permanece ordenada en forma descendente.
+        \item \textbf{Frontera}: Los posibles estados alcanzables a partir del estado actual en el árbol de búsqueda que aún no se han explorado.
+    \end{itemize}
+\newpage
+
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+%
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+\subsection*{Enunciado 4}
+        
+Implemente algún método de búsqueda. Puedes elegir cualquiera menos búsqueda en anchura primero (el desarrollado 
+en clase). Sos libre de elegir cualquiera de los vistos en clases, o inclusive buscar nuevos.
+\subsection*{Resolución}
+\vspace{0.1in}
+
+Se adjunta Jupyter Notebook.
+
+\newpage
+
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+%
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+\subsection*{Enunciado 5}
+
+A nivel implementación, ¿qué tiempo y memoria ocupa el algoritmo? (Se recomienda correr 10 veces y calcular 
+promedio y desvío estándar de las métricas).
+
+
+\subsection*{Enunciado 6}
+
+Si la solución óptima es $2^k - 1$ movimientos con $k$ igual al número de discos. Qué tan lejos está la solución 
+del algoritmo implementado de esta solución óptima (se recomienda correr al menos 10 veces y usar el promedio de 
+trayecto usado).
+
+\subsection*{Resolución}
+
+\vspace{0.1in}
+Se obtienen las siguientes metricas al realizar 10 mediciones de la implementación del algoritmo de DFS: \\
+\begin{table}[h]
+  \caption{Tabla analizando el algoritmo de busqueda en profundidad (DFS).}
+  \begin{tabular}{|c|c|}
+    Metric & Value \\
+    \hline
+    Avg cpu time & 0.12 s \\
+    Avg mem used & 0.149 Mb \\
+    Avg path length & 81.0 nodes \\
+    Optimal path length & 31 nodes \\
+   \end{tabular}
+\end{table}
+
+Comparando con las metricas del algoritmo provisto de BFS se puede apreciar que, en efecto, consume mas tiempo y memoria pero obtiene la solucion optima.
+
+\begin{table}[h]
+  \caption{Tabla analizando el algoritmo de busqueda en anchura (BFS).}
+  \begin{tabular}{|c|c|}
+    Metric & Value \\
+    \hline
+    Avg cpu time & 0.360 s \\
+    Avg mem used & 0.24 Mb \\
+    Avg path length & 31.0 nodes \\
+    Optimal path length & 31 nodes \\
+  \end{tabular}
+\end{table}
+
+\newpage
+
+
+\end{document}

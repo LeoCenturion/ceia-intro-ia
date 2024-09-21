@@ -7,7 +7,7 @@
 \usepackage{siunitx}
 %% \usepackage{enumitem} % Importar el paquete enumitem para modificar las etiquetas de las listas
 \usepackage{graphicx}
-
+\usepackage{hyperref}
 \sisetup{
     output-decimal-marker = {.},
 }
@@ -123,8 +123,8 @@ en clase). Sos libre de elegir cualquiera de los vistos en clases, o inclusive b
 \subsection*{Resolución}
 \vspace{0.1in}
 
-Se adjunta Jupyter Notebook.
-
+Se adjunta código. También disponible en el \href{https://github.com/LeoCenturion/ceia-intro-ia}{repositorio de github}.
+Se implemento la funcion dfs\_tree\_search en el archivo search.py
 \newpage
 
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -146,7 +146,7 @@ trayecto usado).
 \subsection*{Resolución}
 
 \vspace{0.1in}
-Se obtienen las siguientes metricas al realizar 10 mediciones de la implementación del algoritmo de DFS: \\
+Se obtienen las siguientes métricas al realizar 10 mediciones de la implementación del algoritmo de DFS: \\
 \begin{table}[h]
   \caption{Tabla analizando el algoritmo de busqueda en profundidad (DFS).}
   \begin{tabular}{|c|c|}
@@ -159,7 +159,7 @@ Se obtienen las siguientes metricas al realizar 10 mediciones de la implementaci
    \end{tabular}
 \end{table}
 
-Comparando con las metricas del algoritmo provisto de BFS se puede apreciar que, en efecto, consume mas tiempo y memoria pero obtiene la solucion optima.
+Comparando con las metricas del algoritmo provisto de BFS se puede apreciar que, en efecto, consume mas tiempo y memoria pero obtiene la solución óptima.
 
 \begin{table}[h]
   \caption{Tabla analizando el algoritmo de busqueda en anchura (BFS).}
